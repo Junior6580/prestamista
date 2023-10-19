@@ -16,35 +16,55 @@
       integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
   </head>
 
   <body>
-    <nav class="navbar navbar-expand navbar-light bg-light">
-      <div class="nav navbar-nav">
-        <a
-          class="nav-item nav-link active"
-          href="{% url 'inicio' %}"
-          aria-current="page"
-          >Inicio</a
+    <nav class="navbar navbar-dark navbar-expand-md fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">BBBOOTSTRAP</a
+        ><button
+          data-toggle="collapse"
+          class="navbar-toggler"
+          data-target="#navcol-1"
         >
-
-        <a
-          class="nav-item nav-link active"
-          href="{% url 'nosotros' %}"
-          aria-current="page"
-          >Nosotros</a
-        >
-        <a class="nav-item nav-link active" href="#" aria-current="page"
-          >Contacto</a
-        >
+          <span class="sr-only">Toggle navigation</span
+          ><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+          <ul class="nav navbar-nav text-right text-white ml-auto">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" href="{% url 'inicio' %}">Inicio</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="{% url 'prestamos' %}">Prestamos</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item" role="presentation"></li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="#"><i class="fa fa-search"></i></a>
+            </li>
+            <li class="nav-item" role="presentation"></li>
+          </ul>
+        </div>
       </div>
     </nav>
-
+    <br />
     <div class="container">
       <div class="row">
-        <div class="col-12">{% block contenido %} {% endblock %}</div>
+     <div class="col-12">
+     {% block contenido %} {% endblock %}
+     </div>
       </div>
-    </div>
+     </div>
 
     {% block footer %} {% endblock %}
     <footer></footer>

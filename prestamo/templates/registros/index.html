@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block titulo %} Lista de Prestamos {% endblock %}
+{% block contenido %} <br /><br />
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Prestamos</h4>
+    <table id="prestamo-table" class="table">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">ID</th>
+          <th scope="col">Fecha Prestamo</th>
+          <th scope="col">Fecha Fin</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Cantidad de cuotas</th>
+          <th scope="col">Tasa Interes</th>
+          <th scope="col">Debe</th>
+          <th scope="col">Pagado</th>
+          <th scope="col">Cliente ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for Prestamo in prestamos %}
+
+        <tr class="text-center">
+          <td>{{ Prestamo.id }}</td>
+          <td>{{ Prestamo.fecha_prestamo }}</td>
+          <td>{{ Prestamo.fecha_fin }}</td>
+          <td>{{ Prestamo.prestamo }}</td>
+          <td>{{ Prestamo.cantidad_cuotas }}</td>
+          <td>{{ Prestamo.tasa_interes }}</td>
+          <td>{{ Prestamo.debe }}</td>
+          <td>{{ Prestamo.pagado }}</td>
+          <td>{{ Prestamo.cliente }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+<script>
+  $(document).ready(function () {
+    $("#prestamo-table").DataTable();
+  });
+</script>
