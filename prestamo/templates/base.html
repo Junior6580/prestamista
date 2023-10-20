@@ -26,7 +26,7 @@
   <body>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">BBBOOTSTRAP</a
+        <a class="navbar-brand" href="#">PRESTAMOS DON JAIME</a
         ><button
           data-toggle="collapse"
           class="navbar-toggler"
@@ -41,10 +41,13 @@
               <a class="nav-link active" href="{% url 'inicio' %}">Inicio</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
+              <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
             </li>
             <li class="nav-item" role="presentation">
               <a class="nav-link" href="{% url 'prestamos' %}">Prestamos</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="{% url 'cuotas' %}">Pago de cuota</a>
             </li>
           </ul>
           <ul class="nav navbar-nav ml-auto">
@@ -60,11 +63,9 @@
     <br />
     <div class="container">
       <div class="row">
-     <div class="col-12">
-     {% block contenido %} {% endblock %}
-     </div>
+        <div class="col-12">{% block contenido %} {% endblock %}</div>
       </div>
-     </div>
+    </div>
 
     {% block footer %} {% endblock %}
     <footer></footer>

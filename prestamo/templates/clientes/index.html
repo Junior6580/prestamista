@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block titulo %} Lista de Clientes {% endblock %}
+{% block contenido %} <br /><br />
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Clientes</h4>
+    <table id="cliente" class="table">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">ID</th>
+          <th scope="col">Nombres</th>
+          <th scope="col">Documento</th>
+          <th scope="col">Direccion</th>
+          <th scope="col">Correo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for Cliente in clientes %}
+
+        <tr class="text-center">
+          <td>{{ Cliente.id }}</td>
+          <td>{{ Cliente.nombre }}</td>
+          <td>{{ Cliente.documento }}</td>
+          <td>{{ Cliente.direccion }}</td>
+          <td>{{ Cliente.correo }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+<script>
+  $(document).ready(function () {
+    $("#cliente").DataTable();
+  });
+</script>

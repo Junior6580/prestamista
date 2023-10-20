@@ -10,7 +10,13 @@ class Cliente(models.Model):
 
     def __str__(self):
         return self.nombre
+class Abono(models.Model):
+    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
+    abono = models.DecimalField(max_digits=10, decimal_places=2)
+    fecha_abono = models.DateField()
 
+    def __str__(self):
+        return f'Abono de {self.cliente.nombre} - {self.fecha_abono}'
 class Prestamo(models.Model):
     fecha_prestamo = models.DateField()
     fecha_fin = models.DateField()
@@ -23,6 +29,7 @@ class Prestamo(models.Model):
 
     def __str__(self):
         return f'Préstamo de {self.cliente.nombre}'
+ 
 
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):
