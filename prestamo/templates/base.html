@@ -38,17 +38,18 @@
         <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="nav navbar-nav text-right text-white ml-auto">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="{% url 'inicio' %}">Inicio</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'inicio' %}active{% endif %}" href="{% url 'inicio' %}">Inicio</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'clientes' %}active{% endif %}" href="{% url 'clientes' %}">Clientes</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" href="{% url 'prestamos' %}">Prestamos</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'prestamos' %}active{% endif %}" href="{% url 'prestamos' %}">Prestamos</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" href="{% url 'cuotas' %}">Pago de cuota</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'cuotas' %}active{% endif %}" href="{% url 'cuotas' %}">Pago de cuota</a>
             </li>
+            
           </ul>
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item" role="presentation"></li>
