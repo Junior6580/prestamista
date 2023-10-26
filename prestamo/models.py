@@ -23,8 +23,8 @@ class Prestamo(models.Model):
     prestamo = models.DecimalField(max_digits=10, decimal_places=2)
     cantidad_cuotas = models.PositiveIntegerField()
     tasa_interes = models.DecimalField(max_digits=5, decimal_places=2)
-    debe = models.DecimalField(max_digits=10, decimal_places=2)
-    pagado = models.DecimalField(max_digits=10, decimal_places=2)
+    debe = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    pagado = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -49,7 +49,7 @@ def create_initial_data(sender, **kwargs):
             prestamo=1000.00,
             cantidad_cuotas=12,
             tasa_interes=0.05,
-            debe=1000.00,
+            debe=1027.32,
             pagado=0.00,
             cliente=cliente
         )

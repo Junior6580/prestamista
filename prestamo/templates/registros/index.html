@@ -1,46 +1,168 @@
+
+
 {% extends "base.html" %} {% block titulo %} Lista de Prestamos {% endblock %}
 {% block contenido %} <br /><br />
-<div class="card">
-  <div class="card-body">
-    <h4 class="card-title">Prestamos</h4>
-    <table id="prestamo-table" class="table">
-      <thead>
-        <tr class="text-center">
-          <th scope="col">ID</th>
-          <th scope="col">Fecha Prestamo</th>
-          <th scope="col">Fecha Fin</th>
-          <th scope="col">Valor</th>
-          <th scope="col">Cantidad de cuotas</th>
-          <th scope="col">Tasa Interes</th>
-          <th scope="col">Debe</th>
-          <th scope="col">Pagado</th>
-          <th scope="col">Cliente ID</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for Prestamo in prestamos %}
-
-        <tr class="text-center">
-          <td>{{ Prestamo.id }}</td>
-          <td>{{ Prestamo.fecha_prestamo }}</td>
-          <td>{{ Prestamo.fecha_fin }}</td>
-          <td>{{ Prestamo.prestamo }}</td>
-          <td>{{ Prestamo.cantidad_cuotas }}</td>
-          <td>{{ Prestamo.tasa_interes }}</td>
-          <td>{{ Prestamo.debe }}</td>
-          <td>{{ Prestamo.pagado }}</td>
-          <td>{{ Prestamo.cliente }}</td>
-        </tr>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="text-dark">{{ message }}</strong>
+        </div>
         {% endfor %}
-      </tbody>
-    </table>
-  </div>
+        {% endif %}
+        <div class="card">
+            <div class="card-body">
+        <h2>Registro de prestamos</h2>
+        
+                <form action="/nuevo_prestamo/" method="POST">{% csrf_token %}
+                  <div class="mb-3">
+                    <label for="cliente">Cliente</label>
+                    <select name="cliente" id="cliente" class="form-select">
+                        <option value="" selected="selected">Seleccionar un cliente</option>
+                        {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fecha_prestamo">Fecha de Préstamo</label>
+                    <input type="date" class="form-control" name="fecha_prestamo" id="fecha_prestamo">
+                </div>
+
+                <div class="mb-3">
+                    <label for="fecha_fin">Fecha de Fin</label>
+                    <input type="date" class="form-control" name="fecha_fin" id="fecha_fin">
+                </div>
+
+                <div class="mb-3">
+                    <label for="prestamo">Préstamo</label>
+                    <input type="text" class="form-control" name="prestamo" id="prestamo">
+                </div>
+
+                <div class="mb-3">
+                    <label for="cantidad_cuotas">Cantidad de Cuotas</label>
+                    <input type="number" class="form-control" value="" name="cantidad_cuotas" id="cantidad_cuotas">
+                </div>
+
+                <div class="mb-3">
+                    <label for="tasa_interes">Tasa de Interés</label>
+                    <input type="text" class="form-control" name="tasa_interes" id="tasa_interes" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="debe">Debe</label>
+                    <input type="text" class="form-control" value="0" name="debe" id="debe" readonly>
+                </div>
+                <div class="mb-3">
+                  <input class="form-control" type="hidden" value="0" name="pagado" id="pagado" disabled readonly>
+              </div>
+              
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="card">
+            <div class="card-body">
+        <h1>Listado de Prestamos</h1>
+        <table class="table">
+            <table class="table table-striped">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col">ID</th>
+                    <th scope="col">Fecha Prestamo</th>
+                    <th scope="col">Fecha Fin</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Cantidad de cuotas</th>
+                    <th scope="col">Tasa Interes</th>
+                    <th scope="col">Debe</th>
+                    <th scope="col">Pagado</th>
+                    <th scope="col">Cliente ID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for Prestamo in prestamos %}
+
+                  <tr class="text-center">
+                    <td>{{ Prestamo.id }}</td>
+                    <td>{{ Prestamo.fecha_prestamo }}</td>
+                    <td>{{ Prestamo.fecha_fin }}</td>
+                    <td>{{ Prestamo.prestamo }}</td>
+                    <td>{{ Prestamo.cantidad_cuotas }}</td>
+                    <td>{{ Prestamo.tasa_interes }}</td>
+                    <td>{{ Prestamo.debe }}</td>
+                    <td>{{ Prestamo.pagado }}</td>
+                    <td>{{ Prestamo.cliente }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+</div>
+</div>
+<script>
+    // Obtén los elementos de fecha de préstamo y fecha de fin
+    var fechaPrestamoInput = document.getElementById("fecha_prestamo");
+    var fechaFinInput = document.getElementById("fecha_fin");
+    var tasaInteresInput = document.getElementById("tasa_interes");
+
+    // Agrega un evento de cambio a los campos de fecha
+    fechaPrestamoInput.addEventListener("change", calcularTasaInteres);
+    fechaFinInput.addEventListener("change", calcularTasaInteres);
+
+    function calcularTasaInteres() {
+        // Obtiene las fechas de préstamo y fin
+        var fechaPrestamo = new Date(fechaPrestamoInput.value);
+        var fechaFin = new Date(fechaFinInput.value);
+
+        // Calcula la diferencia en meses
+        var diferenciaMeses = (fechaFin - fechaPrestamo) / (1000 * 60 * 60 * 24 * 30.44);
+
+        // Establece la tasa de interés según la diferencia en meses
+        if (diferenciaMeses >= 3) {
+            tasaInteresInput.value = "10";
+        } else {
+            tasaInteresInput.value = "5";
+        }
+    }
+
+     // Obtén los elementos de préstamo, cantidad de cuotas, tasa de interés y debe
+    var prestamoInput = document.getElementById("prestamo");
+    var cantidadCuotasInput = document.getElementById("cantidad_cuotas");
+    var tasaInteresInput = document.getElementById("tasa_interes");
+    var debeInput = document.getElementById("debe");
+
+    // Agrega eventos de cambio a los campos de préstamo, cantidad de cuotas y tasa de interés
+    prestamoInput.addEventListener("input", calcularDeuda);
+    cantidadCuotasInput.addEventListener("input", calcularDeuda);
+    tasaInteresInput.addEventListener("input", calcularDeuda);
+
+    function calcularDeuda() {
+        var prestamo = parseFloat(prestamoInput.value);
+        var cantidadCuotas = parseInt(cantidadCuotasInput.value);
+        var tasaInteres = parseFloat(tasaInteresInput.value) / 100;
+
+        // Calcula el valor adeudado
+        var deuda = prestamo;
+
+        for (var i = 1; i <= cantidadCuotas; i++) {
+            deuda += deuda * tasaInteres;
+        }
+
+        // Actualiza el campo "Debe" con el resultado
+        debeInput.value = deuda.toFixed(2);
+    }
+
+    // Llama a la función de cálculo inicial al cargar la página
+    calcularDeuda();
+</script>
 
 {% endblock %}
-
-<script>
-  $(document).ready(function () {
-    $("#prestamo-table").DataTable();
-  });
-</script>
