@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Prestamo
 from .models import Cliente
-from .form import PrestamoForm
+from .form import AbonoForm, PrestamoForm
 from django.contrib import messages
 
 
@@ -38,7 +38,18 @@ def nuevo_prestamo(request):
     return redirect('prestamos')
 
 
+def registrar_abono(request):
+    clientes = Cliente.objects.all()
+    if request.method == 'POST':
+        form = AbonoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Puedes redirigir a una página de éxito o hacer lo que necesites
+            return redirect('prestamos')  # Reemplaza 'nombre_de_la_vista_de_exito' con la vista que desees
+    else:
+        form = AbonoForm()
 
+    return render(request, 'paginas/cuotas.html', {'form': form, 'clientes': clientes})
 def cuotas(request):
     return render(request, 'paginas/cuotas.html')
 

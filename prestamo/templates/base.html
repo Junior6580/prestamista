@@ -47,7 +47,7 @@
               <a class="nav-link {% if request.resolver_match.url_name == 'prestamos' %}active{% endif %}" href="{% url 'prestamos' %}">Prestamos</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link {% if request.resolver_match.url_name == 'cuotas' %}active{% endif %}" href="{% url 'cuotas' %}">Pago de cuota</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'cuotas' %}active{% endif %}" href="{% url 'registrar_abono' %}">Pago de cuota</a>
             </li>
             
           </ul>

@@ -1,0 +1,45 @@
+{% extends "base.html" %} 
+{% block titulo %} Inicio {% endblock %} 
+{% block contenido %} <br /><br />
+<div class="row">
+  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <div class="card">
+      <div class="card-body">
+        <h1>Registrar Abono</h1>
+        <form action="/registrar_abono/" method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="cliente">Cliente</label>
+            <select name="cliente" id="cliente" class="form-select">
+              <option value="" selected="selected">
+                Seleccionar un cliente
+              </option>
+              {% for cliente in clientes %}
+              <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="abono">Abono</label>
+            <input type="number" class="form-control" name="abono" id="abono" />
+          </div>
+          <div class="mb-3">
+            <label for="fecha_abono">Fecha del abono</label>
+            <input
+              type="date"
+              class="form-control"
+              name="fecha_abono"
+              id="fecha_abono"
+            />
+          </div>
+          <button class="btn btn-success" type="submit">Registrar Abono</button>
+        </form>
+
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
