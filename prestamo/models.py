@@ -17,6 +17,14 @@ class Abono(models.Model):
 
     def __str__(self):
         return f'Abono de {self.cliente.nombre} - {self.fecha_abono}'
+
+    def actualizar_deuda_y_pagado(self):
+        # Actualizar la cantidad pagada
+        self.cliente.prestamo_set.all().update(pagado=models.F('pagado') + self.abono)
+        # Calcular la deuda restante
+        self.cliente.prestamo_set.all().update(debe=models.F('prestamo') - models.F('pagado'))
+        # Guardar el cliente y los préstamos actualizados
+        self.cliente.save()
 class Prestamo(models.Model):
     fecha_prestamo = models.DateField()
     fecha_fin = models.DateField()

@@ -40,14 +40,18 @@ def nuevo_prestamo(request):
 
 def registrar_abono(request):
     clientes = Cliente.objects.all()
+    
     if request.method == 'POST':
-        form = AbonoForm(request.POST)
+        form = AbonoForm(request.POST)  # Initialize the form
         if form.is_valid():
-            form.save()
-            # Puedes redirigir a una página de éxito o hacer lo que necesites
-            return redirect('prestamos')  # Reemplaza 'nombre_de_la_vista_de_exito' con la vista que desees
+            abono = form.save()  # Guarda el abono y obtén la instancia
+            abono.actualizar_deuda_y_pagado()  # Actualiza la deuda y cantidad pagada
+            messages.success(request, 'Abono registrado y deuda actualizada.')
+            return redirect('prestamos')  # Redirige to the page of loans or wherever you desire
     else:
-        form = AbonoForm()
+        form = AbonoForm()  # Initialize the form
+
+    return render(request, 'paginas/cuotas.html', {'form': form, 'clientes': clientes})
 
     return render(request, 'paginas/cuotas.html', {'form': form, 'clientes': clientes})
 def cuotas(request):
