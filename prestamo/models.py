@@ -30,7 +30,8 @@ class Prestamo(models.Model):
     fecha_fin = models.DateField()
     prestamo = models.DecimalField(max_digits=10, decimal_places=2)
     cantidad_cuotas = models.PositiveIntegerField()
-    tasa_interes = models.DecimalField(max_digits=5, decimal_places=2)
+    tasa_interes = models.TextField()
+    valor_cuota = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     debe = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     pagado = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
@@ -41,7 +42,7 @@ class Prestamo(models.Model):
 
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):
-    if sender.name == 'prestamo':  # Reemplaza 'your_app_name' por el nombre de tu aplicación
+    if sender.name == 'prestamo':  
         # Crea un cliente
         cliente = Cliente.objects.create(
             nombre="Junior Medina",
@@ -57,6 +58,7 @@ def create_initial_data(sender, **kwargs):
             prestamo=1000.00,
             cantidad_cuotas=12,
             tasa_interes=0.05,
+            valor_cuota=85.5,
             debe=1027.32,
             pagado=0.00,
             cliente=cliente

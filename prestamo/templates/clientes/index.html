@@ -1,38 +1,98 @@
-{% extends "base.html" %} {% block titulo %} Lista de Clientes {% endblock %}
+{% extends "base.html" %} 
+{% block titulo %} Lista de Prestamos {% endblock %}
 {% block contenido %} <br /><br />
-<div class="card">
-  <div class="card-body">
-    <h4 class="card-title">Clientes</h4>
-    <table id="cliente" class="table">
-      <thead>
-        <tr class="text-center">
-          <th scope="col">ID</th>
-          <th scope="col">Nombres</th>
-          <th scope="col">Documento</th>
-          <th scope="col">Direccion</th>
-          <th scope="col">Correo</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for Cliente in clientes %}
+<div class="row">
+  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    {% if messages %} 
+    {% for message in messages %}
+    <div class="alert alert-dismissible alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong class="text-dark">{{ message }}</strong>
+    </div>
+    {% endfor %} 
+    {% endif %}
+    <div class="card">
+      <div class="card-body">
+        <h2>Registro de clientes</h2>
+        <form action="/nuevo_cliente/" method="POST">
+          {% csrf_token %}
 
-        <tr class="text-center">
-          <td>{{ Cliente.id }}</td>
-          <td>{{ Cliente.nombre }}</td>
-          <td>{{ Cliente.documento }}</td>
-          <td>{{ Cliente.direccion }}</td>
-          <td>{{ Cliente.correo }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+          <div class="mb-3">
+            <label for="nombre">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              name="nombre"
+              id="nombre"
+            required/>
+          </div>
+
+          <div class="mb-3">
+            <label for="documento">Documento</label>
+            <input
+              type="number"
+              class="form-control"
+              name="documento"
+              id="documento"
+              required/>
+          </div>
+          <div class="mb-3">
+            <label for="direccion">Dirección</label>
+            <input
+              type="text"
+              class="form-control"
+              name="direccion"
+              id="direccion"
+              required/>
+          </div>
+          <div class="mb-3">
+            <label for="correo">Correo</label>
+            <input
+              type="text"
+              class="form-control"
+              name="correo"
+              id="correo"
+              required/>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-success btn-block text-white">
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+  <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Clientes</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">ID</th>
+              <th scope="col">Nombres</th>
+              <th scope="col">Documento</th>
+              <th scope="col">Direccion</th>
+              <th scope="col">Correo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for Cliente in clientes %}
+
+            <tr class="text-center">
+              <td>{{ Cliente.id }}</td>
+              <td>{{ Cliente.nombre }}</td>
+              <td>{{ Cliente.documento }}</td>
+              <td>{{ Cliente.direccion }}</td>
+              <td>{{ Cliente.correo }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
 </div>
-
-{% endblock %}
-
-<script>
-  $(document).ready(function () {
-    $("#cliente").DataTable();
-  });
-</script>

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Prestamo
 from .models import Cliente
-from .form import AbonoForm, PrestamoForm
+from .form import AbonoForm, ClienteForm, PrestamoForm
 from django.contrib import messages
 
 
@@ -16,7 +16,15 @@ def prestamos(request):
     prestamos = Prestamo.objects.all()
     return render(request, 'registros/index.html', {'prestamos': prestamos, 'clientes': clientes})
 
-
+def nuevo_cliente(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)  
+        if form.is_valid():
+            form.save()  
+            messages.success(request, 'Cliente registrado')
+            return redirect('clientes') 
+    else:
+        form = ClienteForm()
 
 def nuevo_prestamo(request):
     fecha_prestamo = request.POST['fecha_prestamo']
@@ -24,6 +32,7 @@ def nuevo_prestamo(request):
     prestamo = request.POST['prestamo']
     cantidad_cuotas = request.POST['cantidad_cuotas']
     tasa_interes = request.POST['tasa_interes']
+    valor_cuota = request.POST['valor_cuota']
     debe = request.POST['debe']
     cliente_id = request.POST['cliente']  # Get the client ID from the form
 
@@ -32,7 +41,7 @@ def nuevo_prestamo(request):
 
     prestamos = Prestamo.objects.create(
         fecha_prestamo=fecha_prestamo, fecha_fin=fecha_fin, prestamo=prestamo, 
-        cantidad_cuotas=cantidad_cuotas, tasa_interes=tasa_interes, debe=debe, 
+        cantidad_cuotas=cantidad_cuotas, tasa_interes=tasa_interes, valor_cuota=valor_cuota, debe=debe, 
         cliente=cliente)  # Assign the Cliente instance
     messages.success(request, 'Prestamo registrado!')
     return redirect('prestamos')
@@ -50,8 +59,6 @@ def registrar_abono(request):
             return redirect('prestamos')  # Redirige to the page of loans or wherever you desire
     else:
         form = AbonoForm()  # Initialize the form
-
-    return render(request, 'paginas/cuotas.html', {'form': form, 'clientes': clientes})
 
     return render(request, 'paginas/cuotas.html', {'form': form, 'clientes': clientes})
 def cuotas(request):
