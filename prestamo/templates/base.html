@@ -16,14 +16,15 @@
       integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
       crossorigin="anonymous"
     />
+
+    <!-- Agrega estos enlaces a los estilos de Bootstrap antes de tu propio archivo de estilos -->
     <link
       rel="stylesheet"
-      type="text/css"
-      href="{% static 'css/styles.css' %}"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
   </head>
 
-  <body>
+  <body class="hold-transition sidebar-mini layout-fixed">>
     <nav class="navbar navbar-dark navbar-expand-md fixed-top bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">PRESTAMOS DON JAIME</a
@@ -38,18 +39,33 @@
         <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="nav navbar-nav text-right text-white ml-auto">
             <li class="nav-item" role="presentation">
-              <a class="nav-link {% if request.resolver_match.url_name == 'inicio' %}active{% endif %}" href="{% url 'inicio' %}">Inicio</a>
+              <a
+                class="nav-link {% if request.resolver_match.url_name == 'inicio' %}active{% endif %}"
+                href="{% url 'inicio' %}"
+                >Inicio</a
+              >
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link {% if request.resolver_match.url_name == 'clientes' %}active{% endif %}" href="{% url 'clientes' %}">Clientes</a>
+              <a
+                class="nav-link {% if request.resolver_match.url_name == 'clientes' %}active{% endif %}"
+                href="{% url 'clientes' %}"
+                >Clientes</a
+              >
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link {% if request.resolver_match.url_name == 'prestamos' %}active{% endif %}" href="{% url 'prestamos' %}">Prestamos</a>
+              <a
+                class="nav-link {% if request.resolver_match.url_name == 'prestamos' %}active{% endif %}"
+                href="{% url 'prestamos' %}"
+                >Prestamos</a
+              >
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link {% if request.resolver_match.url_name == 'cuotas' %}active{% endif %}" href="{% url 'registrar_abono' %}">Pago de cuota</a>
+              <a
+                class="nav-link {% if request.resolver_match.url_name == 'cuotas' %}active{% endif %}"
+                href="{% url 'registrar_abono' %}"
+                >Pago de cuota</a
+              >
             </li>
-            
           </ul>
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item" role="presentation"></li>
@@ -64,12 +80,16 @@
     <br />
     <div class="container">
       <div class="row">
-        <div class="col-12">{% block contenido %} {% endblock %}</div>
+        <div class="col">
+        {% block contenido %} {% endblock %}
+      </div>
       </div>
     </div>
+    <br />
+    {% block footer %}
+    <footer></footer>
+    {% endblock %}
 
-    {% block footer %} <footer></footer> {% endblock %}
-    
     <!-- Bootstrap JavaScript Libraries -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -77,6 +97,43 @@
       crossorigin="anonymous"
     ></script>
 
+    <script>
+      $(document).ready(function () {
+        $("#datatable")
+          .DataTable({
+            responsive: true,
+            lengthChange: true,
+            autoWidth: true,
+            buttons: [
+              {
+                extend: "pdfHtml5",
+                text: "PDF",
+                customize: function (doc) {
+                  doc.styles.tableHeader = {
+                    fillColor: "#000000",
+                    color: "#FAFAFA",
+                    fontSize: 12,
+                  };
+                  doc.content[1].alignment = "center";
+                },
+              },
+              "copy",
+              "csv",
+              "excel",
+              "print",
+              "colvis",
+            ],
+          })
+          .buttons()
+          .container()
+          .appendTo("#datatable_wrapper .col-md-6:eq(0)");
+      });
+    </script>
+
+    <script
+      src="https://kit.fontawesome.com/31a11c3e1f.js"
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
       integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"

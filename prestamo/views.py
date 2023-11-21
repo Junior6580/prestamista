@@ -7,7 +7,7 @@ from django.contrib import messages
 
 
 def inicio(request):
-    return render(request, 'paginas/inicio.html')
+    return render(request, 'paginas/inicio.html', {'section': 'inicio'})
 def clientes(request):
     clientes = Cliente.objects.all()
     return render(request, 'clientes/index.html', {'clientes': clientes})
@@ -69,5 +69,3 @@ def cuotas(request):
 
 
     
-
-

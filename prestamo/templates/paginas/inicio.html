@@ -1,14 +1,29 @@
-{% extends  "base.html" %}
+{% extends "base.html" %} 
+{% block titulo %} Inicio {% endblock %} 
+{% block contenido %}
 
-{%  block titulo %} Inicio {% endblock %}
-
-{% block contenido %} 
 <div class="p-5 mb-4 bg-light rounded-3">
   <h1>Hello,</h1>
-    <div class="container-fluid py-5">
-      <h1 class="display-5 fw-bold">Bienvenido Sistema de prestamos</h1>
-      <p class="col-md-8 fs-4">Ingresos</p>
-    </div>
+  <div id="jum" class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Bienvenido Sistema de prestamos</h1>
+    <p class="col-md-8 fs-4">Ingresos</p>
   </div>
+</div>
+<div class="col-lg-3 col-md-6">
+  <div class="card card-primary">
+    <div class="card-body">
+      <div class="inner">
+        <h3>44</h3>
+        <p>User Registrations</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-person-add"></i>
+      </div>
+    </div>
+    <a href="#" class="small-box-footer"
+      
+    ></a>
+  </div>
+</div>
 
 {% endblock %}

@@ -1,0 +1,26 @@
+{% load static %}
+
+<!Doctype html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static 'styles.css' %}" rel="stylesheet">
+|
+</head>
+<body>
+ <div id="header">
+    <span class="logo">Django Autenticación</span>
+{% if request.user.is_authenticated %}
+<ul class="menu">
+<li {% if section == "dashboard" %} class="selected" {% endif %}>
+    <a href="{% url 'dashboard' %}"> My DashBoard</a>
+</li>
+</ul>
+{% endif %}
+ </div>
+ <div id="content">
+{% block content %}
+{% endblock %}
+ </div>
+</body>
+</html>
