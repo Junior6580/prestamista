@@ -1,6 +1,9 @@
+from datetime import timedelta
 from django.db import models
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
+from dateutil.relativedelta import relativedelta
+
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
@@ -10,6 +13,8 @@ class Cliente(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
 class Abono(models.Model):
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
     abono = models.DecimalField(max_digits=10, decimal_places=2)
@@ -22,27 +27,52 @@ class Abono(models.Model):
         # Actualizar la cantidad pagada
         self.cliente.prestamo_set.all().update(pagado=models.F('pagado') + self.abono)
         # Calcular la deuda restante
-        self.cliente.prestamo_set.all().update(debe=models.F('prestamo') - models.F('pagado'))
+        self.cliente.prestamo_set.all().update(
+            debe=models.F('prestamo') - models.F('pagado'))
+        # Actualizar la fecha de la próxima cuota
+        self.actualizar_fecha_proxima_cuota()
         # Guardar el cliente y los préstamos actualizados
         self.cliente.save()
+
 class Prestamo(models.Model):
     fecha_prestamo = models.DateField()
     fecha_fin = models.DateField()
+    fecha_cuota = models.DateField(null=True, blank=True)
+    frecuencia_pago = models.CharField(max_length=10, default='diario')
     prestamo = models.DecimalField(max_digits=10, decimal_places=2)
     cantidad_cuotas = models.PositiveIntegerField()
     tasa_interes = models.TextField()
-    valor_cuota = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    valor_cuota = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0)
     debe = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     pagado = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Préstamo de {self.cliente.nombre}'
- 
+    
+    def calcular_proxima_cuota(self):
+        if self.fecha_cuota:
+            # Calcula la próxima fecha de cuota basándose en la frecuencia de pago
+            if self.frecuencia_pago == 'diario':
+                delta = relativedelta(days=1)
+            elif self.frecuencia_pago == 'ocho_dias':
+                delta = relativedelta(days=8)
+            elif self.frecuencia_pago == 'quince_dias':
+                delta = relativedelta(days=15)
+            elif self.frecuencia_pago == 'mensual':
+                delta = relativedelta(months=1)
+            else:
+                return None
+
+            # Calcula la próxima fecha de cuota sumando el delta a la última fecha de cuota
+            return self.fecha_cuota + delta
+        return None
+
 
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):
-    if sender.name == 'prestamo':  
+    if sender.name == 'prestamo':
         # Crea un cliente
         cliente = Cliente.objects.create(
             nombre="Junior Medina",
@@ -50,7 +80,7 @@ def create_initial_data(sender, **kwargs):
             direccion="Parcela 12 ",
             correo="jsmedina@gmail.com"
         )
-        
+
         # Crea un préstamo relacionado con el cliente
         prestamo = Prestamo.objects.create(
             fecha_prestamo="2023-10-18",

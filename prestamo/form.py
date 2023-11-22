@@ -6,7 +6,6 @@ class PrestamoForm(forms.ModelForm):
         model = Prestamo
         fields = '__all__'
 
-
 class AbonoForm(forms.ModelForm):
     class Meta:
         model = Abono

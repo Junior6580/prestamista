@@ -1,0 +1,8 @@
+{% extends "entrada.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content  %}
+ <h1>Dashboard</h1>
+ Hello, {{ request.user.username }}
+ <p>Weolcome to your page</p>
+ <a href="{% url 'logout' %}">Logout</a>
+ {% endblock %}

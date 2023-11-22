@@ -1,29 +1,25 @@
-{% extends "base.html" %} 
-{% block titulo %} Inicio {% endblock %} 
-{% block contenido %}
+{% extends "base.html" %} {% block titulo %} Inicio {% endblock %} 
+{% block contenido %}<br /><br />
 
-<div class="p-5 mb-4 bg-light rounded-3">
-  <h1>Hello,</h1>
-  <div id="jum" class="container-fluid py-5">
-    <h1 class="display-5 fw-bold">Bienvenido Sistema de prestamos</h1>
-    <p class="col-md-8 fs-4">Ingresos</p>
-  </div>
-</div>
-<div class="col-lg-3 col-md-6">
-  <div class="card card-primary">
-    <div class="card-body">
-      <div class="inner">
-        <h3>44</h3>
-        <p>User Registrations</p>
-      </div>
-      <div class="icon">
-        <i class="ion ion-person-add"></i>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12">
+        <div class="jumbotron">
+          <h1 class="display-4">BIENVENIDO</h1>
+          <p class="lead">Sistema Digital de Prestamos.</p>
+          <hr class="my-4" />
+          <p class="card-text">
+            Un Sistema Digital de Préstamos es un sistema informático que
+            automatiza el proceso de solicitud, aprobación y desembolso de
+            préstamos. Este sistema permite a los prestatarios solicitar
+            préstamos en línea, sin tener que visitar una sucursal bancaria o
+            financiera.
+          </p>
+        </div>
       </div>
     </div>
-    <a href="#" class="small-box-footer"
-      
-    ></a>
   </div>
-</div>
 
-{% endblock %}
+  {% endblock %}
+</div>

@@ -1,3 +1,148 @@
-#jum{
-  background-color: blue;
+
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+body {
+    min-height: 81vh;
+    background: linear-gradient(0deg, #fff, 50%, #DEEEFE);
+    font-family: 'Rubik', sans-serif;
+    background-repeat:no-repeat;
 }
+
+.container{
+    margin-top: 250px !important;
+}
+
+p{
+    font-size: 14px !important;
+}
+
+.card{
+    border-radius:0 ;
+    width: calc(480px + 10 * ((100vw - 320px) / 680)) ;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8) ;
+}
+
+
+.card-body{
+    border-radius: 9px !important;
+}
+
+small{
+    font-size: 15px !important;
+    display: flex;
+    justify-content: center !important;
+}
+
+button{
+    font-size: calc(12px + (13 - 12) * ((100vw - 360px) / (1600 - 320))) !important;;
+    padding:  calc(6px + 5 * ((100vw - 320px) / 780)) !important;
+    color:#000 !important;
+}
+
+button:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline-width: 0
+}
+
+
+label{
+    font-size: 11px !important;
+    vertical-align: middle !important;
+}
+#my-input{
+    vertical-align: middle !important;
+}
+
+.custom-control{
+    padding: auto !important;
+}
+
+.signin{
+    color: #52B4DB;
+    cursor: pointer;
+}
+
+.custom-control-label span{
+    position: relative ;
+    top: 4px ;
+}
+
+.modal-content{
+    width: calc(480px + 10 * ((100vw - 320px) / 680)) ;
+}
+
+.modal {
+    background-image: radial-gradient(circle 919px at 1.7% 6.1%, rgb(198, 198, 207) 0%, rgb(133, 208, 240) 100.2%)
+}
+
+.modal-content{
+    background: transparent !important;
+   
+}
+
+.cross{
+    font-size: 25px !important;
+    cursor: pointer;
+
+}
+
+.btn-primary:hover,
+.btn-primary{
+    background-color:#315189 ;
+    color: #fff !important;
+}
+
+
+input {
+    padding: 6px 12px 6px 12px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #2C3E50;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background-color: #ECEFF1
+}
+
+input:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #304FFE;
+    outline-width: 0
+}
+
+a:focus,
+button:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline-width: 0
+}
+
+select:focus,
+input:focus {
+    box-shadow: none !important;
+    border: 1px solid #2196F3 !important;
+    outline-width: 0 !important;
+    font-weight: 400;
+    background-color: #ECEFF1;
+}
+
+.pass{
+    font-size: 11px;
+    color: #2196F3;
+    cursor: pointer;
+}
+
+.line {
+    height: 1px;
+    width: 45%;
+    background-color: #E0E0E0;
+    margin-top: 10px
+}
+
