@@ -25,12 +25,18 @@ class Abono(models.Model):
 
     def actualizar_deuda_y_pagado(self):
         # Actualizar la cantidad pagada
-        self.cliente.prestamo_set.all().update(pagado=models.F('pagado') + self.abono)
-        # Calcular la deuda restante
-        self.cliente.prestamo_set.all().update(
-            debe=models.F('prestamo') - models.F('pagado'))
-        # Actualizar la fecha de la próxima cuota
-        self.actualizar_fecha_proxima_cuota()
+        prestamos = self.cliente.prestamo_set.all()
+        prestamos.update(pagado=models.F('pagado') + self.abono)
+
+        # Calcular la deuda restante y actualizar la fecha de la próxima cuota
+        for prestamo in prestamos:
+            prestamo.debe = prestamo.prestamo - prestamo.pagado
+            prestamo.actualizar_fecha_proxima_cuota()
+
+            # Check if the debt is zero or negative
+            if prestamo.debe <= 0:
+                prestamo.estado = 'Pagado'  # Update the state to 'Pagado'
+
         # Guardar el cliente y los préstamos actualizados
         self.cliente.save()
 
@@ -38,7 +44,8 @@ class Prestamo(models.Model):
     fecha_prestamo = models.DateField()
     fecha_fin = models.DateField()
     fecha_cuota = models.DateField(null=True, blank=True)
-    frecuencia_pago = models.CharField(max_length=10, default='diario')
+    frecuencia_pago = models.CharField(max_length=20, null=True, blank=True)
+    estado = models.CharField(max_length=10, default='Debe')
     prestamo = models.DecimalField(max_digits=10, decimal_places=2)
     cantidad_cuotas = models.PositiveIntegerField()
     tasa_interes = models.TextField()
@@ -50,8 +57,7 @@ class Prestamo(models.Model):
 
     def __str__(self):
         return f'Préstamo de {self.cliente.nombre}'
-    
-    def calcular_proxima_cuota(self):
+    def actualizar_fecha_proxima_cuota(self):
         if self.fecha_cuota:
             # Calcula la próxima fecha de cuota basándose en la frecuencia de pago
             if self.frecuencia_pago == 'diario':
@@ -66,8 +72,8 @@ class Prestamo(models.Model):
                 return None
 
             # Calcula la próxima fecha de cuota sumando el delta a la última fecha de cuota
-            return self.fecha_cuota + delta
-        return None
+            self.fecha_cuota += delta
+            self.save()
 
 
 @receiver(post_migrate)

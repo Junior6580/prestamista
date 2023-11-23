@@ -1,7 +1,6 @@
 {% extends "base.html" %}
     {% block titulo %} Lista de Prestamos {% endblock %}
     {% block contenido %}
-    <br /><br />
     <div class="row">
         <div class="col-6 mx-auto">
             {% if messages %}
@@ -16,12 +15,13 @@
                 <div class="card-body">
                     <h2>Registro de prestamos</h2>
 
-                    <form action="/nuevo_prestamo/" method="POST">{% csrf_token %}
+                    <form action="/nuevo_prestamo/" method="POST">
+                        {% csrf_token %}
                         <div class="mb-3">
                             <label for="cliente">Cliente</label>
                             <select name="cliente" id="cliente" class="form-select" required />
                             <option value="" selected="selected">Seleccionar un cliente</option>
-                            {% for cliente in clientes %}
+                            {% for cliente in clients %}
                             <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
                             {% endfor %}
                             </select>
@@ -85,11 +85,7 @@
                             <input type="text" class="form-control" value="0" name="debe" id="debe"
                                 readonly />
                         </div>
-                        <div class="mb-3">
-                            <input class="form-control" type="hidden" value="0" name="pagado" id="pagado" disabled
-                                readonly>
-                        </div>
-
+                        
                         <div class="form-group">
                             <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
                         </div>
@@ -117,6 +113,7 @@
                                 <th scope="col">Cuota</th>
                                 <th scope="col">Debe</th>
                                 <th scope="col">Pagado</th>
+                                <th scope="col">Estado</th>
 
                             </tr>
                         </thead>
@@ -141,6 +138,7 @@
                                 <td>{{ Prestamo.valor_cuota }}</td>
                                 <td>{{ Prestamo.debe }}</td>
                                 <td>{{ Prestamo.pagado }}</td>
+                                <td>{{ Prestamo.estado }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

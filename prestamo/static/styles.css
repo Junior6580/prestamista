@@ -1,148 +1,146 @@
-
-@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
 body {
-    min-height: 81vh;
-    background: linear-gradient(0deg, #fff, 50%, #DEEEFE);
-    font-family: 'Rubik', sans-serif;
-    background-repeat:no-repeat;
+  min-height: 81vh;
+  background: linear-gradient(0deg, #fff, 50%, #deeefe);
+  font-family: "Rubik", sans-serif;
+  background-repeat: no-repeat;
 }
 
-.container{
-    margin-top: 250px !important;
+.container {
+  margin-top: 150px !important;
 }
+
+
+.login-form {
+  border-radius: 5px; /* Puedes ajustar el valor según tus preferencias */
+  border: 1px solid #ccc; /* Puedes cambiar el color del borde según tus preferencias */
+  padding: 10px;
+}
+/* Agregamos estilos para los inputs con la clase form-control */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 10px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.login-form input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-form input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+button {
+  font-size: calc(
+    12px + (13 - 12) * ((100vw - 360px) / (1600 - 320))
+  ) !important;
+  padding: calc(6px + 5 * ((100vw - 320px) / 780)) !important;
+  color: #000 !important;
+}
+
+label {
+  font-size: 15px !important;
+  vertical-align: middle !important;
+}
+
+@import url(//fonts.googleapis.com/css?family=Muli);
 
 p{
-    font-size: 14px !important;
-}
-
-.card{
-    border-radius:0 ;
-    width: calc(480px + 10 * ((100vw - 320px) / 680)) ;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8) ;
-}
-
-
-.card-body{
-    border-radius: 9px !important;
-}
-
-small{
-    font-size: 15px !important;
-    display: flex;
-    justify-content: center !important;
-}
-
-button{
-    font-size: calc(12px + (13 - 12) * ((100vw - 360px) / (1600 - 320))) !important;;
-    padding:  calc(6px + 5 * ((100vw - 320px) / 780)) !important;
-    color:#000 !important;
-}
-
-button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    outline-width: 0
-}
-
-
-label{
-    font-size: 11px !important;
-    vertical-align: middle !important;
-}
-#my-input{
-    vertical-align: middle !important;
-}
-
-.custom-control{
-    padding: auto !important;
-}
-
-.signin{
-    color: #52B4DB;
-    cursor: pointer;
-}
-
-.custom-control-label span{
-    position: relative ;
-    top: 4px ;
-}
-
-.modal-content{
-    width: calc(480px + 10 * ((100vw - 320px) / 680)) ;
-}
-
-.modal {
-    background-image: radial-gradient(circle 919px at 1.7% 6.1%, rgb(198, 198, 207) 0%, rgb(133, 208, 240) 100.2%)
-}
-
-.modal-content{
-    background: transparent !important;
-   
-}
-
-.cross{
-    font-size: 25px !important;
-    cursor: pointer;
+    line-height: 1.8;
 
 }
 
-.btn-primary:hover,
-.btn-primary{
-    background-color:#315189 ;
-    color: #fff !important;
+a {
+    color: #026efd;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #026efd;
+}
+
+h1, h2, h3, h4, h5, h6 {font-family: 'Muli', 'seans-serif'; font-weight: normal;}
+
+
+h1{
+    border-bottom: 1px solid #bbb;
+    padding: 0 0 10px 0;
+    margin: 10px 0 20px 0;
+}
+
+h2{
+    margin: 30px 0 20px;
+}
+
+ol{
+    line-height: 1.5px;
+}
+
+#header{
+    padding: 10px 100px;
+    font-size: 20px;
+    background: #026efd;
+    color: #fff;
+    border-bottom: 10px solid #026efd;
+    overflow: auto;
+}
+
+#header .logo {
+    font-family: 'Muli', 'sans-serif';
+    float: left;
+    color: #f3f7cc;
+    font-size: 28px;
+    margin-left: 40%;
+    font-weight: bolder;
+    margin-top: 2%;
+}
+
+#header ul.menu{
+    list-style: none;
+    float: left;
+    margin-left: 15%;
+    margin-top: 2%;
+}
+
+#header ul.menu li{
+    float: left;
+    padding: 4px 10px;
+}
+
+#header ul.menu li.selected a, #header ul.menu li.selected a:hover{
+    color: #02f9fd;
+    font-weight: bold;
+
+}
+
+#header a{
+    color: #f3f7cc;
+
 }
 
 
-input {
-    padding: 6px 12px 6px 12px;
-    border: 1px solid lightgrey;
-    border-radius: 4px;
-    margin-bottom: 25px;
-    margin-top: 2px;
-    width: 100%;
-    box-sizing: border-box;
-    color: #2C3E50;
-    font-size: 14px;
-    letter-spacing: 1px;
-    background-color: #ECEFF1
+#header a:hover{
+    color: #fff;
+
 }
 
-input:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #304FFE;
-    outline-width: 0
+#header .user{
+    float: right;
+    padding-top: 4px;
 }
 
-a:focus,
-button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    outline-width: 0
-}
 
-select:focus,
-input:focus {
-    box-shadow: none !important;
-    border: 1px solid #2196F3 !important;
-    outline-width: 0 !important;
-    font-weight: 400;
-    background-color: #ECEFF1;
-}
 
-.pass{
-    font-size: 11px;
-    color: #2196F3;
-    cursor: pointer;
-}
-
-.line {
-    height: 1px;
-    width: 45%;
-    background-color: #E0E0E0;
-    margin-top: 10px
-}
 
