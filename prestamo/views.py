@@ -73,9 +73,11 @@ def nuevo_prestamo(request):
 
 
 def registrar_abono(request):
-    clientes = Cliente.objects.all()
+    prestamos = Prestamo.objects.filter(estado='debe')
+    
+    # Obtener los clientes que tienen préstamos con estado 'debe'
+    clientes = Cliente.objects.filter(prestamo__in=prestamos).distinct()
     abonos = Abono.objects.all()
-    prestamos = Prestamo.objects.all()
 
     if request.method == 'POST':
         form = AbonoForm(request.POST)
