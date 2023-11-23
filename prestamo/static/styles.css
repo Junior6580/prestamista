@@ -10,6 +10,10 @@ body {
   margin-top: 150px !important;
 }
 
+.thead{
+  border-radius: 20px;
+}
+
 
 .login-form {
   border-radius: 5px; /* Puedes ajustar el valor según tus preferencias */

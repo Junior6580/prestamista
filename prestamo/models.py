@@ -42,7 +42,6 @@ class Abono(models.Model):
 
 class Prestamo(models.Model):
     fecha_prestamo = models.DateField()
-    fecha_fin = models.DateField()
     fecha_cuota = models.DateField(null=True, blank=True)
     frecuencia_pago = models.CharField(max_length=20, null=True, blank=True)
     estado = models.CharField(max_length=10, default='Debe')
@@ -90,7 +89,7 @@ def create_initial_data(sender, **kwargs):
         # Crea un préstamo relacionado con el cliente
         prestamo = Prestamo.objects.create(
             fecha_prestamo="2023-10-18",
-            fecha_fin="2023-12-18",
+            fecha_cuota="2023-12-18",
             prestamo=1000.00,
             cantidad_cuotas=12,
             tasa_interes=0.05,
