@@ -1,4 +1,4 @@
-from collections import UserList
+from collections import User
 from datetime import date, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
