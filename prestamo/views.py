@@ -73,7 +73,7 @@ def registrar_abono(request):
         if form.is_valid():
             # No guardes el abono en la base de datos aún
             abono = form.save(commit=False)
-
+            
             # Obtén la deuda actual del cliente
             cliente = abono.cliente
             deuda_actual = sum(

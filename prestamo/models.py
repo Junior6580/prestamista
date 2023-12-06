@@ -20,6 +20,8 @@ class Abono(models.Model):
     abono = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_abono = models.DateField()
 
+    # Resto del código...
+
     def __str__(self):
         return f'Abono de {self.cliente.nombre} - {self.fecha_abono}'
 
@@ -40,6 +42,7 @@ class Abono(models.Model):
         # Guardar el cliente y los préstamos actualizados
         self.cliente.save()
 
+
 class Prestamo(models.Model):
     fecha_prestamo = models.DateField()
     fecha_cuota = models.DateField(null=True, blank=True)
@@ -56,6 +59,7 @@ class Prestamo(models.Model):
 
     def __str__(self):
         return f'Préstamo de {self.cliente.nombre}'
+
     def actualizar_fecha_proxima_cuota(self):
         if self.fecha_cuota:
             # Calcula la próxima fecha de cuota basándose en la frecuencia de pago
@@ -85,18 +89,3 @@ def create_initial_data(sender, **kwargs):
             direccion="Parcela 12 ",
             correo="jsmedina@gmail.com"
         )
-
-        # Crea un préstamo relacionado con el cliente
-        prestamo = Prestamo.objects.create(
-            fecha_prestamo="2023-10-18",
-            fecha_cuota="2023-12-18",
-            prestamo=1000.00,
-            cantidad_cuotas=12,
-            tasa_interes=0.05,
-            valor_cuota=85.5,
-            debe=1027.32,
-            pagado=0.00,
-            cliente=cliente
-        )
-
-# Asegúrate de reemplazar 'your_app_name' con el nombre real de tu aplicación

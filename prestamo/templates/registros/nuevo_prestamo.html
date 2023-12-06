@@ -45,7 +45,7 @@
                             <input type="date" class="form-control" name="fecha_prestamo" id="fecha_prestamo" readonly />
                         </div>
 
-                       <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" readonly />
+                       <input type="hidden" class="form-control" name="fecha_fin" id="fecha_fin" readonly />
                        
 
                         <div class="mb-3">
@@ -124,8 +124,6 @@
             }
         }
         
-
-
         // Obtén los elementos de fecha de préstamo y fecha de fin
         var fechaPrestamoInput = document.getElementById("fecha_prestamo");
         var fechaFinInput = document.getElementById("fecha_fin");
