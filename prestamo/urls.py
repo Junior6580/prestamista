@@ -17,5 +17,7 @@ urlpatterns = [
     path('prestamos', views.prestamos, name='prestamos'),
     path('nuevo_prestamo/', views.nuevo_prestamo, name='nuevo_prestamo'),
     path('registrar_abono/', views.registrar_abono, name='registrar_abono'),
+    path('generate_pdf_cliente/', views.generate_pdf_cliente, name='generate_pdf_cliente'),
+    path('generate_pdf_prestamo/', views.generate_pdf_prestamo, name='generate_pdf_prestamo'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

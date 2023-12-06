@@ -7,7 +7,10 @@ from .models import Prestamo
 from .models import Cliente
 from .form import AbonoForm, ClienteForm, PrestamoForm
 from django.contrib import messages
-from django.contrib.auth.models import User
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 
 
 @login_required
@@ -22,6 +25,7 @@ def inicio(request):
 def clientes(request):
     clientes = Cliente.objects.all()
     return render(request, 'clientes/index.html', {'clientes': clientes})
+
 
 def prestamos(request):
     clientes = Prestamo.objects.all()
@@ -67,7 +71,7 @@ def registrar_abono(request):
         if form.is_valid():
             # No guardes el abono en la base de datos aún
             abono = form.save(commit=False)
-            
+
             # Obtén la deuda actual del cliente
             cliente = abono.cliente
             deuda_actual = sum(
@@ -89,3 +93,84 @@ def registrar_abono(request):
         form = AbonoForm()
 
     return render(request, 'paginas/cuotas.html', {'prestamos': prestamos, 'form': form, 'clientes': clientes, 'abonos': abonos})
+
+
+def generate_pdf_cliente(request):
+    # Create a buffer to receive PDF data.
+    buffer = HttpResponse(content_type='application/pdf')
+    buffer['Content-Disposition'] = 'attachment; filename="clientes.pdf"'
+
+    # Create the PDF object, using the buffer as its "file."
+    p = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Create a list to store table data.
+    data = [['ID', 'Nombre', 'Documento', 'Dirección', 'Correo']]
+
+    # Query the data from the database
+    clientes = Cliente.objects.all()
+
+    for cliente in clientes:
+        data.append([cliente.id, cliente.nombre, cliente.documento,
+                    cliente.direccion, cliente.correo])
+
+    # Create the table and style it.
+    table = Table(data)
+    style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+                        ('GRID', (0, 0), (-1, -1), 1, colors.black)])
+
+    table.setStyle(style)
+
+    # Add the table to the PDF document.
+    elements = [table]
+
+    # Build the PDF document and return it.
+    p.build(elements)
+    return buffer
+
+
+def generate_pdf_prestamo(request):
+    # Create a buffer to receive PDF data.
+    buffer = HttpResponse(content_type='application/pdf')
+    buffer['Content-Disposition'] = 'attachment; filename="Prestamos.pdf"'
+
+    # Create the PDF object, using the buffer as its "file."
+    p = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Create a list to store table data.
+    data = [['ID', 'Cliente ID', 'Fecha Prestamo', 'Fecha Cuota', 'Valor',
+             'Cantidad cuotas', 'Frecuencia pago', 'Tasa Interes', 'Cuota', 'Debe', 'Pagado', 'Estado']]
+
+    # Query the data from the database
+    prestamos = Prestamo.objects.all()
+
+    for prestamo in prestamos:
+        data.append([prestamo.id, prestamo.cliente, prestamo.fecha_prestamo,
+                    prestamo.fecha_cuota, prestamo.prestamo, prestamo.cantidad_cuotas, prestamo.frecuencia_pago,
+                    prestamo.tasa_interes, prestamo.valor_cuota, prestamo.debe, prestamo.pagado, prestamo.estado])
+
+    # Transpose the data to display the table horizontally
+    data_transposed = list(map(list, zip(*data)))
+
+    # Create the table and style it.
+    table = Table(data_transposed)
+    style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+                        ('GRID', (0, 0), (-1, -1), 1, colors.black)])
+
+    table.setStyle(style)
+
+    # Add the table to the PDF document.
+    elements = [table]
+
+    # Build the PDF document and return it.
+    p.build(elements)
+    return buffer

@@ -76,6 +76,7 @@
               <th scope="col">Documento</th>
               <th scope="col">Direccion</th>
               <th scope="col">Correo</th>
+              <th scope="col"><a href="{% url 'generate_pdf_cliente' %}" class="btn btn-danger"><i class="far fa-file-pdf"></i></a></th>
             </tr>
           </thead>
           <tbody>
@@ -86,7 +87,8 @@
               <td>{{ Cliente.nombre }}</td>
               <td>{{ Cliente.documento }}</td>
               <td>{{ Cliente.direccion }}</td>
-              <td>{{ Cliente.correo }}</td>
+              <td>{{ Cliente.correo }}</td> 
+              <td></td> 
             </tr>
             {% endfor %}
           </tbody>

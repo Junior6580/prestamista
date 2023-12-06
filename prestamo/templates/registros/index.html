@@ -9,8 +9,7 @@
   <div class="card">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Listado de Prestamos</h1> 
-        <a href="{% url 'nuevo_prestamo' %}" class="btn btn-success btn-sm">Nuevo Prestamo</a>
+        <h1>Listado de Prestamos</h1> <a href="{% url 'nuevo_prestamo' %}" class="btn btn-success btn-sm">Nuevo Prestamo</a>
       </div>
       <table id="datatable" class="table table-striped table-bordered">
         <thead>
@@ -26,7 +25,8 @@
             <th scope="col">Cuota</th>
             <th scope="col">Debe</th>
             <th scope="col">Pagado</th>
-            <th scope="col">Estado</th>
+            <th scope="col">Estado</th> 
+            <th scope="col"><a href="{% url 'generate_pdf_prestamo' %}" class="btn btn-danger"><i class="far fa-file-pdf"></i></a></th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +49,7 @@
             <td>{{ Prestamo.debe }}</td>
             <td>{{ Prestamo.pagado }}</td>
             <td>{{ Prestamo.estado }}</td>
+            <td></td>
           </tr>
           {% endfor %}
         </tbody>
