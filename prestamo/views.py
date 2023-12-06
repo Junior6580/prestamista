@@ -23,12 +23,6 @@ def clientes(request):
     clientes = Cliente.objects.all()
     return render(request, 'clientes/index.html', {'clientes': clientes})
 
-
-def usuarios(request):
-    usuarios = User.objects.all()
-    return render(request, 'registros/users.html', {'usuarios': usuarios})
-
-
 def prestamos(request):
     clientes = Prestamo.objects.all()
     prestamos = Prestamo.objects.all()

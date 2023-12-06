@@ -42,10 +42,6 @@
                                 href="{% url 'registrar_abono' %}">Registro de abono</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'usuarios' %}active{% endif %}"
-                                href="{% url 'usuarios' %}">Usuarios</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
                             <a class="nav-link"
                                 href="{% url 'logout' %}">Cerrar sesión</a>
                         </li>
