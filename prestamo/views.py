@@ -1,4 +1,3 @@
-from collections import User
 from datetime import date, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -33,10 +32,12 @@ def usuarios(request):
 def prestamos(request):
     clientes = Prestamo.objects.all()
     prestamos = Prestamo.objects.all()
-    return render(request, 'registros/index.html', {'prestamos': prestamos, 'clientes':clientes})
+    return render(request, 'registros/index.html', {'prestamos': prestamos, 'clientes': clientes})
+
 
 def nuevo_prestamo(request):
-    clients_with_debe_loans = Prestamo.objects.filter(estado='debe').values_list('cliente_id', flat=True).distinct()
+    clients_with_debe_loans = Prestamo.objects.filter(
+        estado='debe').values_list('cliente_id', flat=True).distinct()
     clientes = Cliente.objects.exclude(id__in=clients_with_debe_loans)
 
     if request.method == 'POST':
@@ -51,7 +52,6 @@ def nuevo_prestamo(request):
     return render(request, 'registros/nuevo_prestamo.html', {'form': form, 'clientes': clientes})
 
 
-
 def nuevo_cliente(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
@@ -63,21 +63,32 @@ def nuevo_cliente(request):
         form = ClienteForm()
 
 
-
-
-
 def registrar_abono(request):
     prestamos = Prestamo.objects.filter(estado='debe')
-    
-    # Obtener los clientes que tienen préstamos con estado 'debe'
     clientes = Cliente.objects.filter(prestamo__in=prestamos).distinct()
     abonos = Abono.objects.all()
 
     if request.method == 'POST':
         form = AbonoForm(request.POST)
         if form.is_valid():
-            abono = form.save()
+            # No guardes el abono en la base de datos aún
+            abono = form.save(commit=False)
+
+            # Obtén la deuda actual del cliente
+            cliente = abono.cliente
+            deuda_actual = sum(
+                prestamo.debe for prestamo in cliente.prestamo_set.all())
+
+            # Verifica si el abono es mayor que la deuda actual
+            if abono.abono > deuda_actual:
+                messages.error(
+                    request, 'El abono no puede ser mayor que la deuda actual.')
+                return redirect('registrar_abono')
+
+            # Guarda el abono y actualiza la deuda
+            abono.save()
             abono.actualizar_deuda_y_pagado()
+
             messages.success(request, 'Abono registrado y deuda actualizada.')
             return redirect('prestamos')
     else:
